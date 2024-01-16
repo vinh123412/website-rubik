@@ -9,7 +9,7 @@
 <body>
   <div class="form-container">
     <h2>Thông Tin Giao Hàng/Thanh Toán</h2>
-    <form action="/pay" method="post">
+    <form action="/pay" method="post" id="payForm">
       <div class="form-group">
         <label for="Tên">Tên:</label>
         <input type="text" id="ten" name="ten" placeholder="Tên người nhận">
@@ -37,6 +37,45 @@
       </div>
       <button type="submit" class="submit-btn">HOÀN TẤT ĐẶT HÀNG</button>
     </form>
+    <div id="notification" class="notification"></div>
   </div>
+  
+
+  <script>
+    document.getElementById('payForm').addEventListener('submit', async (event) => {
+      event.preventDefault();
+  
+      const formData = new FormData(event.target);
+      const response = await fetch('/pay', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          ten: formData.get('ten'),
+          sdt: formData.get('sdt'),
+          diachi: formData.get('diachi'),
+          time: formData.get('time'),
+          payment: formData.get('payment')
+        })
+      });
+  
+      const result = await response.json();
+  
+      // Get the notification element
+      const notification = document.getElementById('notification');
+  
+      // Check if there's an error
+      if (result.error) {
+        // Display an error notification
+        notification.textContent = result.error;
+        notification.style.display = 'block';
+      }else {
+      // Redirect to a success page or handle accordingly
+      window.location.href = '/success';
+    }
+    });
+  </script>
+  
 </body>
 </html>

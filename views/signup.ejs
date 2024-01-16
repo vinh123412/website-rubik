@@ -1,15 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sign up</title>
   <link rel="stylesheet" href="styles/style.css">
+  <style>
+    /* Add some basic styles for the notification */
+    .notification {
+      display: none;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #4CAF50;
+      background-color: #DFF2BF;
+      color: #4F8A10;
+      border-radius: 4px;
+    }
+
+    .notification.success {
+      background-color: #DFF2BF;
+      border-color: #4F8A10;
+      color: #4F8A10;
+    }
+
+    .notification.error {
+      background-color: #F2DEDE;
+      border-color: #D9534F;
+      color: #D9534F;
+    }
+  </style>
 </head>
+
 <body>
   <div class="form-container">
     <h2>SignUp</h2>
-    <form action="/signup" method="post">
+    <form action="/signup" method="post" id="signupForm">
       <div class="form-group">
         <label for="name">Name:</label>
         <input type="text" id="name" name="username" placeholder="Enter your name" required autocomplete="off">
@@ -20,6 +46,48 @@
       </div>
       <button type="submit" class="submit-btn">SignUp</button>
     </form>
+    <p>Already have an account? <a href="/login">Login</a></p>
+
+    <!-- Notification div for displaying messages -->
+    <div id="notification" class="notification"></div>
+
+    <script>
+      document.getElementById('signupForm').addEventListener('submit', async (event) => {
+        event.preventDefault();
+
+        const formData = new FormData(event.target);
+        const response = await fetch('/signup', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            username: formData.get('username'),
+            password: formData.get('password')
+          })
+        });
+
+        const result = await response.json();
+
+        // Get the notification element
+        const notification = document.getElementById('notification');
+
+        // Check if the signup was successful
+        if (result.success) {
+          // Display a success notification
+          notification.textContent = result.message;
+          notification.classList.add('success');
+        } else {
+          // Display an error notification
+          notification.textContent = result.message;
+          notification.classList.add('error');
+        }
+
+        // Show the notification element
+        notification.style.display = 'block';
+      });
+    </script>
   </div>
 </body>
+
 </html>

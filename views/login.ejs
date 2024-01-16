@@ -1,15 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login</title>
   <link rel="stylesheet" href="styles/style.css">
+  <style>
+    /* Add some basic styles for the notification */
+    .notification {
+      display: none;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #D9534F;
+      background-color: #F2DEDE;
+      color: #D9534F;
+      border-radius: 4px;
+    }
+  </style>
 </head>
+
 <body>
   <div class="form-container">
     <h2>Login</h2>
-    <form action="/login" method="post">
+    <form action="/login" method="post" id="loginForm">
       <div class="form-group">
         <label for="name">Name:</label>
         <input type="text" id="name" name="username" placeholder="Enter your name" required autocomplete="off">
@@ -20,7 +34,45 @@
       </div>
       <button type="submit" class="submit-btn">Login</button>
     </form>
-    <p>Don't have account? <a href="/signup">Signup</a></p>
+    <p>Don't have an account? <a href="/signup">Signup</a></p>
+
+    <!-- Notification div for displaying messages -->
+    <div id="notification" class="notification"></div>
+
+    <script>
+      document.getElementById('loginForm').addEventListener('submit', async (event) => {
+        event.preventDefault();
+    
+        const formData = new FormData(event.target);
+        const response = await fetch('/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            username: formData.get('username'),
+            password: formData.get('password')
+          })
+        });
+    
+        const result = await response.json();
+    
+        // Get the notification element
+        const notification = document.getElementById('notification');
+    
+        // Check if the login was unsuccessful
+        if (!result.success) {
+          // Display an error notification
+          notification.textContent = result.message;
+          notification.style.display = 'block';
+        } else {
+          // Redirect to the home page upon successful login
+          window.location.href = '/';
+        }
+      });
+    </script>
+    
   </div>
 </body>
+
 </html>

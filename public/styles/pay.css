@@ -50,3 +50,13 @@ h2{
 .option-title{
   margin-bottom: 5px;
 }
+.notification {
+  display: none;
+  padding: 10px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  border: 1px solid #D9534F;
+  background-color: #F2DEDE;
+  color: #D9534F;
+  border-radius: 4px;
+}

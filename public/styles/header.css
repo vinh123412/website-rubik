@@ -84,3 +84,18 @@
 .cart-container{
   position: relative;
 }
+
+.search-container {
+  display: flex;
+}
+
+.search-bar {
+  flex: 1;
+}
+.lienhe{
+  margin-left: 40px;
+  width: 90px;
+}
+.search-button {
+  border-radius: 5px;
+}

@@ -1,6 +1,6 @@
 .product-container{
   height: 300px;
-  margin-top: 100px;
+  margin-top: 150px;
   margin-right: 20px;
   margin-left: 20px;
 }
@@ -14,7 +14,7 @@
 .product{
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-  column-gap: 8px;
+  column-gap: 10px;
 }
 .rubik-product{
   border-style: solid;
@@ -31,4 +31,33 @@
 .purchase-button:hover{
   cursor: pointer;
   opacity: 0.5;
+}
+.guide-container{
+  margin-top: 200px;
+  margin-left: 20px;
+}
+.rubik-guide{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+.guide{
+  width: 300px;
+}
+.guide-image{
+  width: 100%;
+}
+.product1{
+  height: 118px;
+  display: inline-block;
+}
+.rubik-product1{
+  width: 500px;
+  border-style: solid;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 10px;
+}
+.rubik-picture1{
+  width: 118px;
+  height: 118px;
 }
